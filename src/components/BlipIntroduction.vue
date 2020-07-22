@@ -30,7 +30,7 @@
       </p>
       <p>
         This library thrives on the generosity of individuals willing to contribute their creative ideas to help sound
-        designers access quality content. All that we ask is you <i>please</i> read the rules before submission!
+        designers access quality content. All that we ask is you <em>please read the rules</em> before submission!
       </p>
     </v-card-text>
     <v-divider></v-divider>
