@@ -1,9 +1,11 @@
 import Vue from 'vue'
 import Vuetify from 'vuetify'
 import 'vuetify/dist/vuetify.css'
+import VueCookies from 'vue-cookies'
 
 import App from './App'
 
+Vue.use(VueCookies)
 Vue.use(Vuetify)
 // Vue.config.productionTip = false;
 

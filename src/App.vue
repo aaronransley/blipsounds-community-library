@@ -2,12 +2,22 @@
   <div id="app">
     <v-app theme="dark">
       <v-app-bar app>
-        <div class="font-weight-bold site-title text-truncate" title="Community Sound Library">
+        <div
+          class="font-weight-bold site-title text-truncate"
+          title="Community Sound Library"
+        >
           Community Sound Library
         </div>
         <v-dialog v-model="showInfo" scrollable max-width="512px">
           <template v-slot:activator="{ on, attrs }">
-            <v-btn class="show-info-btn" dark x-small fab color="green" v-bind="attrs" v-on="on"
+            <v-btn
+              class="show-info-btn"
+              dark
+              x-small
+              fab
+              color="green"
+              v-bind="attrs"
+              v-on="on"
               ><v-icon>mdi-help</v-icon></v-btn
             >
           </template>
@@ -24,7 +34,14 @@
           hide-details
         ></v-text-field>
         <v-spacer />
-        <v-btn class="upload" small color="green" dark href="https://forms.gle/LC1xt1YiVccrZxSe7" target="_blank">
+        <v-btn
+          class="upload"
+          small
+          color="green"
+          dark
+          href="https://forms.gle/LC1xt1YiVccrZxSe7"
+          target="_blank"
+        >
           <span class="upload-inner">Upload</span>
           <v-icon right>mdi-cloud-upload</v-icon>
         </v-btn>
@@ -51,20 +68,32 @@
                   :set="(authorWebsite = getAuthorWebsite(item.author))"
                 >
                   <template v-if="authorWebsite">
-                    <a :href="authorWebsite" target="_blank">{{ item.author }}</a>
+                    <a :href="authorWebsite" target="_blank">{{
+                      item.author
+                    }}</a>
                   </template>
                   <template v-else>{{ item.author }}</template>
                 </div>
               </template>
               <template v-slot:item.filename="{ item }">
-                <div class="text-truncate field-filename" :title="item.filename">{{ item.filename }}</div>
+                <div
+                  class="text-truncate field-filename"
+                  :title="item.filename"
+                >
+                  {{ item.filename }}
+                </div>
               </template>
               <template v-slot:item.tags="{ item }">
                 <div class="field-tags" :title="item.tags">{{ item.tags }}</div>
               </template>
               <template v-slot:expanded-item="{ item, headers }">
                 <td :colspan="headers.length">
-                  <iframe :src="createIframeSrc(item.link)" width="100%" height="120" frameborder="0" />
+                  <iframe
+                    :src="createIframeSrc(item.link)"
+                    width="100%"
+                    height="120"
+                    frameborder="0"
+                  />
                 </td>
               </template>
               <template v-slot:item.actions="{ item }">
@@ -79,7 +108,13 @@
                     >Download
                     <v-icon right>mdi-cloud-download</v-icon>
                   </v-btn>
-                  <v-btn style="margin: 2px;" rounded small my-2 color="secondary" @click="expandItem(item)"
+                  <v-btn
+                    style="margin: 2px;"
+                    rounded
+                    small
+                    my-2
+                    color="secondary"
+                    @click="expandItem(item)"
                     >Preview
                     <v-icon right>mdi-volume-high</v-icon>
                   </v-btn>
@@ -158,10 +193,17 @@ export default {
     let gSheetIndex = 3
     let gSheetJson = `https://spreadsheets.google.com/feeds/list/${gSheetId}/${gSheetIndex}/public/full?alt=json`
 
+    if (!this.$cookies.isKey('has-seen-info')) {
+      this.showInfo = true
+      this.$cookies.set('has-seen-info', true, Infinity)
+    }
+
     fetch(gSheetJson)
       .then((response) => {
         if (response.status !== 200) {
-          console.log('Looks like there was a problem. Status Code: ' + response.status)
+          console.log(
+            'Looks like there was a problem. Status Code: ' + response.status
+          )
           return
         }
         response.json().then((data) => {
