@@ -153,7 +153,7 @@ export default {
     authorWebsites() {
       let authorWebsitesTable = {}
       if (this.sheetData.length) {
-        this.sheetData.forEach((item, index) => {
+        this.sheetData.forEach((item) => {
           if (item.author && item.website && item.website.trim() !== '') {
             if (!authorWebsitesTable[item.author]) {
               let websiteUrl = item.website
