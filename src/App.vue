@@ -2,10 +2,10 @@
   <div id="app">
     <v-app theme="dark">
       <v-app-bar app>
-        <div class="font-weight-bold site-title text-truncate" title="Blipsounds Community Library">
-          <a target="_blank" class="secondary--text" href="https://blipsounds.com">Blipsounds</a> Community Library
+        <div class="font-weight-bold site-title text-truncate" title="Community Sound Library">
+          Community Sound Library
         </div>
-        <v-spacer/>
+        <v-spacer />
         <v-text-field
           class="search-bar"
           v-model="search"
@@ -14,21 +14,14 @@
           single-line
           hide-details
         ></v-text-field>
-        <v-spacer/>
-        <v-btn
-          class="upload"
-          small
-          color="green"
-          dark
-          href="https://forms.gle/LC1xt1YiVccrZxSe7"
-          target="_blank"
-        >
+        <v-spacer />
+        <v-btn class="upload" small color="green" dark href="https://forms.gle/LC1xt1YiVccrZxSe7" target="_blank">
           <span class="upload-inner">Upload</span>
           <v-icon right>mdi-cloud-upload</v-icon>
         </v-btn>
       </v-app-bar>
 
-      <v-main style="padding-top: 5px">
+      <v-main style="padding-top: 5px;">
         <v-container fluid>
           <v-card>
             <v-data-table
@@ -46,7 +39,7 @@
                 <div
                   class="text-truncate field-author"
                   :title="item.author"
-                  :set="authorWebsite = getAuthorWebsite(item.author)"
+                  :set="(authorWebsite = getAuthorWebsite(item.author))"
                 >
                   <template v-if="authorWebsite">
                     <a :href="authorWebsite" target="_blank">{{ item.author }}</a>
@@ -62,34 +55,23 @@
               </template>
               <template v-slot:expanded-item="{ item, headers }">
                 <td :colspan="headers.length">
-                  <iframe
-                    :src="createIframeSrc(item.link)"
-                    width="100%"
-                    height="120"
-                    frameborder="0"
-                  />
+                  <iframe :src="createIframeSrc(item.link)" width="100%" height="120" frameborder="0" />
                 </td>
               </template>
               <template v-slot:item.actions="{ item }">
-                <div style="margin: 4px 0">
+                <div style="margin: 4px 0;">
                   <v-btn
-                    style="margin: 2px"
+                    style="margin: 2px;"
                     rounded
                     small
                     color="primary"
                     :href="createDownloadLink(item.link)"
                     target="_blank"
-                  >Download
+                    >Download
                     <v-icon right>mdi-cloud-download</v-icon>
                   </v-btn>
-                  <v-btn
-                    style="margin: 2px"
-                    rounded
-                    small
-                    my-2
-                    color="secondary"
-                    @click="expandItem(item)"
-                  >Preview
+                  <v-btn style="margin: 2px;" rounded small my-2 color="secondary" @click="expandItem(item)"
+                    >Preview
                     <v-icon right>mdi-volume-high</v-icon>
                   </v-btn>
                 </div>
@@ -99,15 +81,9 @@
         </v-container>
       </v-main>
 
-      <v-footer app style="border-top: 1px solid lightgrey">
+      <v-footer app style="border-top: 1px solid lightgrey;">
         <v-container class="text-center caption">
-          Visit
-          <a href="https://blipsounds.com" target="_blank">the Blipsounds homepage</a>
-          and the
-          <a
-            href="https://invite.gg/blipsounds"
-            target="_blank"
-          >Blipsounds Discord server</a>
+          Join us in the <a href="https://invite.gg/blipsounds" target="_blank">Blipsounds Discord server</a>!
         </v-container>
       </v-footer>
     </v-app>
@@ -139,7 +115,7 @@ export default {
   computed: {
     sheetData() {
       if (!this.sheetDataRaw) return []
-      return this.sheetDataRaw.feed.entry.map(entry => {
+      return this.sheetDataRaw.feed.entry.map((entry) => {
         return {
           author: entry.gsx$author.$t,
           filename: entry.gsx$filename.$t,
@@ -174,17 +150,17 @@ export default {
     let gSheetJson = `https://spreadsheets.google.com/feeds/list/${gSheetId}/${gSheetIndex}/public/full?alt=json`
 
     fetch(gSheetJson)
-      .then(response => {
+      .then((response) => {
         if (response.status !== 200) {
           console.log('Looks like there was a problem. Status Code: ' + response.status)
           return
         }
-        response.json().then(data => {
+        response.json().then((data) => {
           data.feed.entry.reverse()
           this.sheetDataRaw = data
         })
       })
-      .catch(err => {
+      .catch((err) => {
         console.log('Fetch error', err)
         this.loadError = true
       })
