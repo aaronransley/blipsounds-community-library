@@ -59,7 +59,7 @@
                 </td>
               </template>
               <template v-slot:item.actions="{ item }">
-                <div style="margin: 4px 0;">
+                <div style="margin: 4px 0;" data-iframe-height>
                   <v-btn
                     style="margin: 2px;"
                     rounded
