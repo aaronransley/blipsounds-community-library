@@ -5,6 +5,15 @@
         <div class="font-weight-bold site-title text-truncate" title="Community Sound Library">
           Community Sound Library
         </div>
+        <v-dialog v-model="showInfo" scrollable max-width="512px">
+          <template v-slot:activator="{ on, attrs }">
+            <v-btn class="show-info-btn" dark x-small fab color="green" v-bind="attrs" v-on="on"
+              ><v-icon>mdi-help</v-icon></v-btn
+            >
+          </template>
+          <BlipIntroduction @close="showInfo = false" />
+        </v-dialog>
+
         <v-spacer />
         <v-text-field
           class="search-bar"
@@ -80,23 +89,23 @@
           </v-card>
         </v-container>
       </v-main>
-
-      <v-footer app style="border-top: 1px solid lightgrey;">
-        <v-container class="text-center caption">
-          Join us in the <a href="https://invite.gg/blipsounds" target="_blank">Blipsounds Discord server</a>!
-        </v-container>
-      </v-footer>
     </v-app>
   </div>
 </template>
 
 <script>
+import BlipIntroduction from './components/BlipIntroduction'
+
 export default {
   name: 'App',
+  components: {
+    BlipIntroduction
+  },
   data() {
     return {
       sheetDataRaw: null,
       loadError: false,
+      showInfo: false,
       search: '',
       expanded: [],
       headers: [
@@ -213,9 +222,14 @@ export default {
   min-width: 230px;
 }
 
+.show-info-btn {
+  margin: 0 1em;
+}
+
 @media (max-width: 550px) {
   .upload.upload.upload {
     padding: 0 5px;
+    margin-left: 1em;
     min-width: 0;
   }
 
