@@ -24,7 +24,6 @@
     <link rel="stylesheet" type="text/css" href="/Resources/css/app.css" />
     <link rel="stylesheet" type="text/css" href="/Resources/css/queries1.css" />
     <link href="https://fonts.googleapis.com/css?family=Montserrat:400,600,700" rel="stylesheet" />
-    <script src="https://courses.blipsounds.com/purchase?product_id=1189918" data-cb-site="blipsounds"></script>
     <title>Blipsounds - Community Library</title>
     <link
       rel="icon"
@@ -36,101 +35,150 @@
     <script src="/Resources/js/popup.js"></script>
     <script src="/Resources/js/freecourse.js"></script>
   </head>
-
   <body>
-    <div><span class="popup-close" onclick="popUpHide()">X</span></div>
-    <div id="main-content">
-      <input id="toggle" type="checkbox" />
-      <label id="navbar-mobile" class="hamburger" for="toggle" onclick="popUpDisplay()">
-        <div class="top"></div>
-        <div class="meat"></div>
-        <div class="bottom"></div>
-      </label>
-      <div class="nav">
-        <div class="nav-wrapper">
-          <nav class="ham-nav">
-            <img style="width: 100px;" src="https://s3.amazonaws.com/blipwebsite/Blipsounds+B+trans.png" /><a
-              href="https://blipsounds.com"
-              >Home</a
-            ><a href="https://blipsounds.com#projects" target="_blank">Our Projects</a
-            ><a href="contact.php" target="_self">Contact Us</a>
-          </nav>
-        </div>
-      </div>
-      <div class="menu-bar">
-        <nav class="sticky">
-          <div class="row">
-            <a href="https://blipsounds.com"
-              ><img src="https://s3.amazonaws.com/blipwebsite/BlipSounds.png" class="top-logo"
-            /></a>
+    <style type="text/css">
+      /* Mobile + base styles */
+      html,
+      body {
+        background-color: #333;
+      }
 
-            <a href="https://blipsounds.com"
-              ><img src="https://s3.amazonaws.com/blipwebsite/Blipsounds+B+trans.png" class="top-mobile-logo"
-            /></a>
+      .library-nav {
+        background-color: white;
+        padding: 20px 0;
+        height: 100px;
+        display: flex;
+        flex-direction: column;
+        justify-content: space-between;
+      }
 
-            <ul id="navbar-desktop" class="main-nav text-80">
-              <li><a href="https://blipsounds.com">Home</a></li>
-              <!--<li><a href="#">Sounds</a></li>-->
-              <li><a href="https://blipsounds.com#projects">Our Projects</a></li>
-              <li class="menu-item">
-                <a href="">Other</a>
-                <ul class="sub-menu" style="display: none;">
-                  <li class="sub-menu-item"><a href="https://courses.blipsounds.com/">Courses</a></li>
-                  <li class="sub-menu-item"><a href="competition.php">Competition</a></li>
-                  <li class="sub-menu-item">
-                    <a href="/community-library">Sound Library</a>
-                  </li>
-                </ul>
-              </li>
+      .library-nav--logo {
+        display: block;
+        margin: 0 25px;
+        font-size: 0;
+      }
 
-              <li><a href="contact.php">Contact</a></li>
-            </ul>
-          </div>
-        </nav>
-      </div>
-    </div>
-    <div class="section-header-demo">
-      <style type="text/css">
-        /* .community-library-embed {
-          width: 100%;
-          height: 100%;
-        } */
+      .library-nav--logo img {
+        height: 35px;
+      }
 
-        .community-library-embed iframe {
-          width: 100%;
-          min-height: 100vh;
+      .library-nav--links {
+        display: flex;
+        align-items: center;
+        list-style-type: none;
+        margin: 10px 25px 0px 25px;
+      }
+
+      .library-nav--links li {
+        margin: 0 10px;
+        font-size: 12px;
+        text-transform: uppercase;
+        font-weight: 600;
+      }
+
+      .library-nav--links li a {
+        color: #2a8d9f;
+        text-decoration: none;
+        border-bottom: 2px solid transparent;
+        transition: border 0.4s ease;
+      }
+
+      .library-nav--links li a:hover {
+        border-bottom-color: #76bd1d;
+      }
+
+      .library-nav--links li:first-child {
+        margin-left: 0;
+      }
+
+      .library-nav--links li:last-child {
+        margin-right: 0;
+      }
+
+      /* Large mobile styles */
+      @media screen and (min-width: 500px) {
+        .library-nav--links li {
+          margin: 0 15px;
+          font-size: 20px;
         }
-      </style>
-      <main class="community-library-embed">
-        <iframe src="https://blipsounds-community-library.netlify.app" frameborder="0"></iframe>
-      </main>
-    </div>
+      }
 
-    <footer class="footer-bottom">
-      <div class="row">
-        <div class="col-1 footer-copyright">
-          <p class="footer-nav">Copyright &copy; 2019 by Blipsounds. All rights reserved.</p>
-        </div>
-        <div class="col-1 footer-icons">
-          <ul class="social-links">
-            <li>
-              <a href="https://www.facebook.com/blipsounds/"><i class="ion-social-facebook"></i></a>
-            </li>
-            <li>
-              <a href="https://twitter.com/blipsounds"><i class="ion-social-twitter"></i></a>
-            </li>
-            <li>
-              <a href="https://www.youtube.com/blipsounds"><i class="ion-social-youtube"></i></a>
-            </li>
-          </ul>
-        </div>
-      </div>
+      /* Tablet styles */
+      @media screen and (min-width: 830px) {
+        .library-nav {
+          flex-direction: row;
+        }
+
+        .library-nav--logo img {
+          height: 65px;
+        }
+      }
+
+      /* Desktop styles */
+      @media screen and (min-width: 1024px) {
+      }
+    </style>
+    <nav class="library-nav">
+      <a class="library-nav--logo" href="https://blipsounds.com"
+        ><img src="https://s3.amazonaws.com/blipwebsite/BlipSounds.png"
+      /></a>
+      <ul class="library-nav--links">
+        <li><a href="/#projects">Our&nbsp;Projects</a></li>
+        <li><a href="https://courses.blipsounds.com">Courses</a></li>
+        <li><a href="/contact.php">Contact</a></li>
+      </ul>
+    </nav>
+    <style type="text/css">
+      .community-library-embed {
+        font-size: 0 !important;
+      }
+
+      .community-library-embed iframe {
+        width: 100%;
+        height: calc(100vh - (100px + 95px) /* - (header + footer) */);
+      }
+    </style>
+    <main class="community-library-embed">
+      <iframe src="https://blipsounds-community-library.netlify.app" frameborder="0"></iframe>
+    </main>
+
+    <style type="text/css">
+      footer {
+        text-align: center;
+        padding: 10px 0;
+        height: 95px;
+      }
+
+      footer p {
+        font-size: 14px !important;
+        margin-bottom: 15px;
+      }
+
+      footer .social-links {
+        margin-bottom: 0;
+        font-size: 15px !important;
+      }
+    </style>
+    <footer>
+      <p>
+        Copyright &copy; <span id="copyDate">2020</span> Blipsounds.<br />
+        All rights reserved.
+      </p>
+      <script>
+        document.getElementById('copyDate').innerText = new Date().getFullYear()
+      </script>
+      <ul class="social-links">
+        <li>
+          <a href="https://www.facebook.com/blipsounds/"><i class="ion-social-facebook"></i></a>
+        </li>
+        <li>
+          <a href="https://twitter.com/blipsounds"><i class="ion-social-twitter"></i></a>
+        </li>
+        <li>
+          <a href="https://www.youtube.com/blipsounds"><i class="ion-social-youtube"></i></a>
+        </li>
+      </ul>
     </footer>
-    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.2/jquery.min.js"></script>
-    <script src="//cdn.jsdelivr.net/respond/1.4.2/respond.min.js"></script>
-    <script src="//cdn.jsdelivr.net/html5shiv/3.7.2/html5shiv.min.js"></script>
-    <script src="//cdn.jsdelivr.net/selectivizr/1.0.3b/selectivizr.min.js"></script>
-    <script src="/vendors/js/jquery.waypoints.min.js"></script>
     <script src="/Resources/js/script1.js"></script>
 
     <!-- Twitter universal website tag code -->
