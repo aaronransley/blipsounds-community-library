@@ -6,7 +6,7 @@ import VueCookies from 'vue-cookies'
 import App from './App'
 
 Vue.use(VueCookies)
-Vue.$cookies.config(Infinity, '/', '', false, 'None')
+Vue.$cookies.config(Infinity, '/', '', true, 'None')
 
 Vue.use(Vuetify)
 // Vue.config.productionTip = false;
