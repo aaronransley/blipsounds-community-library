@@ -49,11 +49,15 @@
                   class="text-truncate field-author"
                   :title="item.author"
                   :set="(authorWebsite = getAuthorWebsite(item.author))"
+                  :set2="(authorDiscord = getAuthorDiscord(item.author))"
                 >
                   <template v-if="authorWebsite">
                     <a :href="authorWebsite" target="_blank">{{ item.author }}</a>
                   </template>
                   <template v-else>{{ item.author }}</template>
+                  <template v-if="authorDiscord">
+                    <div class="on-discord" :title="authorDiscord">{{ authorDiscord }} on Discord</div>
+                  </template>
                 </div>
               </template>
               <template v-slot:item.filename="{ item }">
@@ -133,7 +137,8 @@ export default {
           link: entry.gsx$link.$t,
           info: entry.gsx$otherinfo.$t,
           tags: entry.gsx$tags.$t,
-          website: entry.gsx$website.$t
+          website: entry.gsx$website.$t,
+          discord: entry.gsx$discord.$t
         }
       })
     },
@@ -141,18 +146,33 @@ export default {
       let authorWebsitesTable = {}
       if (this.sheetData.length) {
         this.sheetData.forEach((item) => {
-          if (item.author && item.website && item.website.trim() !== '') {
-            if (!authorWebsitesTable[item.author]) {
+          let authorTrimmed = item.author.trim()
+          if (authorTrimmed && item.website && item.website.trim() !== '') {
+            if (!authorWebsitesTable[authorTrimmed]) {
               let websiteUrl = item.website
               if (websiteUrl.search(/^http[s]?:\/\//) === -1) {
                 websiteUrl = 'https://' + websiteUrl
               }
-              authorWebsitesTable[item.author] = websiteUrl
+              authorWebsitesTable[authorTrimmed] = websiteUrl
             }
           }
         })
       }
       return authorWebsitesTable
+    },
+    authorDiscords() {
+      let authorDiscordsTable = {}
+      if (this.sheetData.length) {
+        this.sheetData.forEach((item) => {
+          let authorTrimmed = item.author.trim()
+          if (authorTrimmed && item.discord && item.discord.trim() !== '') {
+            if (!authorDiscordsTable[authorTrimmed]) {
+              authorDiscordsTable[authorTrimmed] = item.discord
+            }
+          }
+        })
+      }
+      return authorDiscordsTable
     }
   },
   mounted() {
@@ -183,7 +203,10 @@ export default {
   },
   methods: {
     getAuthorWebsite(author) {
-      return this.authorWebsites[author] || ''
+      return this.authorWebsites[author.trim()] || ''
+    },
+    getAuthorDiscord(author) {
+      return this.authorDiscords[author.trim()] || ''
     },
     expandItem(item) {
       this.expanded = [item]
@@ -218,7 +241,7 @@ export default {
 }
 
 .field-author {
-  max-width: 125px;
+  max-width: 185px;
 }
 
 .field-filename {
@@ -226,11 +249,21 @@ export default {
 }
 
 .field-tags {
-  min-width: 230px;
+  max-width: 280px;
 }
 
 .show-info-btn {
   margin: 0 1em;
+}
+
+.on-discord {
+  padding-right: 4px;
+  padding-top: 4px;
+  font-size: 10px;
+  font-style: italic;
+  white-space: normal;
+  line-height: 1;
+  color: grey;
 }
 
 @media (max-width: 550px) {
