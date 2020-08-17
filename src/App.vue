@@ -56,7 +56,7 @@
                   </template>
                   <template v-else>{{ item.author }}</template>
                   <template v-if="authorDiscord">
-                    <div class="on-discord" :title="authorDiscord">{{ authorDiscord }} on Discord</div>
+                    <div class="on-discord" :title="authorDiscord">{{ authorDiscord }}</div>
                   </template>
                 </div>
               </template>
@@ -116,7 +116,7 @@ export default {
       expanded: [],
       headers: [
         {
-          text: 'Author',
+          text: 'Author & Discord Handle',
           align: 'start',
           value: 'author'
         },
