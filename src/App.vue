@@ -27,7 +27,7 @@
         <v-dialog v-model="showZips" scrollable max-width="768px">
           <template v-slot:activator="{ on, attrs }">
             <v-btn class="zips" small color="green" dark v-bind="attrs" v-on="on">
-              <span class="upload-inner">Zips</span>
+              <span class="upload-inner">Download</span>
               <v-icon right>mdi-cloud-download</v-icon>
             </v-btn>
           </template>
