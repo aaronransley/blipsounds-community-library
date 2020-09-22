@@ -40,6 +40,7 @@
                   >Download
                   <v-icon right>mdi-cloud-download</v-icon>
                 </v-btn>
+                <span v-else>Coming soon... ⌚</span>
               </td>
             </tr>
           </tbody>
