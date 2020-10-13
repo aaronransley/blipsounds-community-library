@@ -1,5 +1,5 @@
 <template>
-  <v-card>
+  <v-card color="secondary">
     <v-card-title>The Zips 📦</v-card-title>
     <v-card-text>
       <h4>Zips? Zippers? PANTS?!</h4>
@@ -32,7 +32,7 @@
                 <v-btn
                   v-if="item.link"
                   style="margin: 2px;"
-                  color="primary"
+                  color="primary darken-4"
                   :href="item.link"
                   target="_blank"
                   rounded
@@ -50,7 +50,7 @@
     <v-divider></v-divider>
     <v-card-actions>
       <v-spacer />
-      <v-btn color="blue darken-1" text @click="$emit('close')">Got 'em!</v-btn>
+      <v-btn color="primary" text rounded @click="$emit('close')">Got 'em!</v-btn>
     </v-card-actions>
   </v-card>
 </template>
@@ -80,11 +80,11 @@ hr {
 }
 
 .zips-table .zips-header {
-  background-color: #4caf50;
+  background-color: var(--v-primary-darken4);
 }
 
 .zips-table .zips-header.zips-header th {
-  color: white;
+  color: var(--v-primary-lighten4);
 }
 
 .zips-table .zips-header.zips-header th:first-child {

@@ -3,11 +3,11 @@
     <v-app theme="dark">
       <v-app-bar app>
         <div class="font-weight-bold site-title text-truncate" title="Community Sound Library">
-          Community Sound Library
+          👻 Community S🎃und Library
         </div>
         <v-dialog v-model="showInfo" scrollable max-width="512px">
           <template v-slot:activator="{ on, attrs }">
-            <v-btn class="show-info-btn" dark x-small fab color="green" v-bind="attrs" v-on="on"
+            <v-btn class="show-info-btn" dark x-small fab color="primary" v-bind="attrs" v-on="on"
               ><v-icon>mdi-help</v-icon></v-btn
             >
           </template>
@@ -26,14 +26,14 @@
         <v-spacer />
         <v-dialog v-model="showZips" scrollable max-width="768px">
           <template v-slot:activator="{ on, attrs }">
-            <v-btn class="zips" small color="green" dark v-bind="attrs" v-on="on">
+            <v-btn class="zips" small color="primary" v-bind="attrs" v-on="on">
               <span class="upload-inner">Download</span>
               <v-icon right>mdi-cloud-download</v-icon>
             </v-btn>
           </template>
           <BlipZips :zipsData="zipsData" @close="showZips = false" />
         </v-dialog>
-        <v-btn class="upload" small color="green" dark href="https://forms.gle/LC1xt1YiVccrZxSe7" target="_blank">
+        <v-btn class="upload" small color="primary" href="https://forms.gle/LC1xt1YiVccrZxSe7" target="_blank">
           <span class="upload-inner">Upload</span>
           <v-icon right>mdi-cloud-upload</v-icon>
         </v-btn>
@@ -43,7 +43,7 @@
         <v-container fluid>
           <v-card>
             <template v-if="!sheetData.length">
-              <v-progress-circular class="loader" indeterminate size="64"></v-progress-circular>
+              <v-progress-circular class="loader" indeterminate size="64" color="primary"></v-progress-circular>
             </template>
             <template v-else>
               <v-data-table
@@ -65,7 +65,7 @@
                     :set2="(authorDiscord = getAuthorDiscord(item.author))"
                   >
                     <template v-if="authorWebsite">
-                      <a :href="authorWebsite" target="_blank">{{ item.author }}</a>
+                      <a :href="authorWebsite" class="info--text" target="_blank">{{ item.author }}</a>
                     </template>
                     <template v-else>{{ item.author }}</template>
                     <template v-if="authorDiscord">
@@ -92,13 +92,13 @@
                       style="margin: 2px;"
                       rounded
                       small
-                      color="primary"
+                      color="primary darken-4"
                       :href="createDownloadLink(item.link)"
                       target="_blank"
                       >Download
                       <v-icon right>mdi-cloud-download</v-icon>
                     </v-btn>
-                    <v-btn style="margin: 2px;" rounded small my-2 color="secondary" @click="expandItem(item)"
+                    <v-btn style="margin: 2px;" rounded small my-2 color="secondary lighten-1" @click="expandItem(item)"
                       >Preview
                       <v-icon right>mdi-volume-high</v-icon>
                     </v-btn>
@@ -292,8 +292,21 @@ export default {
   margin-top: 60px;
 }
 
+.theme--dark.v-data-table
+  > .v-data-table__wrapper
+  > table
+  > tbody
+  > tr:hover:not(.v-data-table__expanded__content):not(.v-data-table__empty-wrapper) {
+  background-color: var(--v-secondary-lighten1);
+}
+
+.v-application code {
+  background-color: var(--v-info-darken4);
+  color: var(--v-primary-lighten4);
+}
+
 .field-author {
-  max-width: 185px;
+  min-width: 165px;
 }
 
 .field-filename {

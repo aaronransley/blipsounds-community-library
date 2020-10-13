@@ -12,6 +12,22 @@ Vue.use(Vuetify)
 // Vue.config.productionTip = false;
 
 new Vue({
-  vuetify: new Vuetify({}),
+  vuetify: new Vuetify({
+    theme: {
+      dark: true,
+      options: { customProperties: true },
+      themes: {
+        dark: {
+          primary: '#C44A04',
+          secondary: '#251F26',
+          accent: '#F2EA79',
+          error: '#F2B999',
+          info: '#D98484',
+          success: '#590202',
+          warning: '#A62103'
+        }
+      }
+    }
+  }),
   render: (h) => h(App)
 }).$mount('#app')

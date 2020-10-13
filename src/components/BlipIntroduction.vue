@@ -1,5 +1,5 @@
 <template>
-  <v-card>
+  <v-card color="secondary">
     <v-card-title>The Deets 🔍</v-card-title>
     <v-card-text>
       <h4>What is this?</h4>
@@ -39,7 +39,7 @@
     <v-divider></v-divider>
     <v-card-actions>
       <v-spacer />
-      <v-btn color="blue darken-1" text @click="$emit('close')">Neato!</v-btn>
+      <v-btn color="primary" rounded text @click="$emit('close')">Neato!</v-btn>
     </v-card-actions>
   </v-card>
 </template>
