@@ -3,7 +3,7 @@
     <v-app theme="dark">
       <v-app-bar app>
         <div class="font-weight-bold site-title text-truncate" title="Community Sound Library">
-          👻 Community S🎃und Library
+          Community Sound Library
         </div>
         <v-dialog v-model="showInfo" scrollable max-width="512px">
           <template v-slot:activator="{ on, attrs }">
