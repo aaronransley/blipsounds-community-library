@@ -51,10 +51,10 @@
                 :items="sheetData"
                 :search="search"
                 :expanded="expanded"
+                :footerProps="{ itemsPerPageOptions: [100, 75, 50, -1] }"
+                height="calc(100vh - 150px)"
                 item-key="link"
                 single-expand
-                disable-pagination
-                hide-default-footer
               >
                 <template v-slot:item.author="{ item }">
                   <!-- :set attr is a hack to set local template variable -->
@@ -284,6 +284,14 @@ export default {
 </script>
 
 <style>
+html {
+  overflow: auto;
+}
+
+body {
+  background-color: #121212;
+}
+
 #app {
   font-family: 'Roboto', Helvetica, Arial, sans-serif;
   -webkit-font-smoothing: antialiased;
@@ -298,6 +306,10 @@ export default {
   > tbody
   > tr:hover:not(.v-data-table__expanded__content):not(.v-data-table__empty-wrapper) {
   background-color: var(--v-secondary-lighten1);
+}
+
+.v-application--wrap {
+  min-height: 0;
 }
 
 .v-application code {
