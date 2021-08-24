@@ -116,6 +116,12 @@
 <script>
 import BlipIntroduction from './components/BlipIntroduction'
 import BlipZips from './components/BlipZips'
+import parse from 'csv-parse'
+
+const sheetDataCsvUrl =
+  'https://docs.google.com/spreadsheets/d/e/2PACX-1vSphNZ_lnHkZjsWHJl0D9OKsOX7aZ4MEwoflkYGNl0XcOalspwQ-DH8G12hFimg9L5EdM7L2ZTA0v5D/pub?gid=1484031240&single=true&output=csv'
+const zipsDataCsvUrl =
+  'https://docs.google.com/spreadsheets/d/e/2PACX-1vSphNZ_lnHkZjsWHJl0D9OKsOX7aZ4MEwoflkYGNl0XcOalspwQ-DH8G12hFimg9L5EdM7L2ZTA0v5D/pub?gid=1327133211&single=true&output=csv'
 
 export default {
   name: 'App',
@@ -148,27 +154,27 @@ export default {
   computed: {
     sheetData() {
       if (!this.sheetDataRaw) return []
-      return this.sheetDataRaw.feed.entry.map((entry) => {
+      return this.sheetDataRaw.map((entry) => {
         return {
-          author: entry.gsx$author.$t,
-          filename: entry.gsx$filename.$t,
-          link: entry.gsx$link.$t,
-          info: entry.gsx$otherinfo.$t,
-          tags: entry.gsx$tags.$t,
-          website: entry.gsx$website.$t,
-          discord: entry.gsx$discord.$t
+          author: entry['Author'],
+          filename: entry['Filename'],
+          link: entry['Link'],
+          info: entry['Other Info'],
+          tags: entry['Tags'],
+          website: entry['Website'],
+          discord: entry['Discord']
         }
       })
     },
     zipsData() {
       if (!this.zipsDataRaw) return []
-      return this.zipsDataRaw.feed.entry.map((entry) => {
+      return this.zipsDataRaw.map((entry) => {
         return {
-          title: entry.gsx$title.$t,
-          link: entry.gsx$link.$t,
-          notes: entry.gsx$notes.$t,
-          numFiles: entry.gsx$numfiles.$t,
-          size: entry.gsx$size.$t
+          title: entry['Title'],
+          link: entry['Link'],
+          notes: entry['Notes'],
+          numFiles: entry['Num Files'],
+          size: entry['Size']
         }
       })
     },
@@ -206,12 +212,6 @@ export default {
     }
   },
   mounted() {
-    let gSheetId = '1fp6ImVu1je8F-PWgvVY-aKT2utQ57nrqHamd7R-bcBM'
-    let gSheetSoundsIndex = 3
-    let gSheetZipsIndex = 9
-    let gSheetSoundsJson = `https://spreadsheets.google.com/feeds/list/${gSheetId}/${gSheetSoundsIndex}/public/full?alt=json`
-    let gSheetZipsJson = `https://spreadsheets.google.com/feeds/list/${gSheetId}/${gSheetZipsIndex}/public/full?alt=json`
-
     if (!this.$cookies.isKey('has-seen-info')) {
       if (!window.location.href.includes('localhost')) {
         this.showInfo = true
@@ -219,41 +219,23 @@ export default {
       }
     }
 
-    // Fetch sounds
-    fetch(gSheetSoundsJson)
-      .then((response) => {
-        if (response.status !== 200) {
-          console.log('Looks like there was a problem. Status Code: ' + response.status)
-          return
-        }
-        response.json().then((data) => {
-          data.feed.entry.reverse()
-          this.sheetDataRaw = data
-        })
-      })
-      .catch((err) => {
-        console.log('Fetch error', err)
-        this.loadError = true
-      })
+    fetch(sheetDataCsvUrl).then((response) => {
+      response.text().then(async (data) => (this.sheetDataRaw = await this.parseCsv(data)))
+    })
 
-    // Fetch zips
-    fetch(gSheetZipsJson)
-      .then((response) => {
-        if (response.status !== 200) {
-          console.log('Looks like there was a problem. Status Code: ' + response.status)
-          return
-        }
-        response.json().then((data) => {
-          data.feed.entry.reverse()
-          this.zipsDataRaw = data
-        })
-      })
-      .catch((err) => {
-        console.log('Fetch error', err)
-        this.loadError = true
-      })
+    fetch(zipsDataCsvUrl).then((response) => {
+      response.text().then(async (data) => (this.zipsDataRaw = await this.parseCsv(data)))
+    })
   },
   methods: {
+    parseCsv(csvText) {
+      return new Promise((resolve) => {
+        parse(csvText, { columns: true }, (err, output) => {
+          output.reverse()
+          resolve(output)
+        })
+      })
+    },
     getAuthorWebsite(author) {
       return this.authorWebsites[author.trim()] || ''
     },
