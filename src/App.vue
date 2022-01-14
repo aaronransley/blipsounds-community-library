@@ -2,48 +2,70 @@
   <div id="app">
     <v-app theme="dark">
       <v-app-bar app>
-        <div class="font-weight-bold site-title text-truncate" title="Community Sound Library">
+        <div
+          class="font-weight-bold site-title text-truncate"
+          title="Community Sound Library"
+        >
           Community Sound Library
         </div>
         <v-dialog v-model="showInfo" scrollable max-width="512px">
-          <template v-slot:activator="{ on, attrs }">
-            <v-btn class="show-info-btn" dark x-small fab color="primary" v-bind="attrs" v-on="on"
-              ><v-icon>mdi-help</v-icon></v-btn
+          <template #activator="{ on, attrs }">
+            <v-btn
+              class="show-info-btn"
+              dark
+              x-small
+              fab
+              color="primary"
+              v-bind="attrs"
+              v-on="on"
             >
+              <v-icon>mdi-help</v-icon>
+            </v-btn>
           </template>
           <BlipIntroduction @close="showInfo = false" />
         </v-dialog>
 
         <v-spacer />
         <v-text-field
-          class="search-bar"
           v-model="search"
+          class="search-bar"
           append-icon="mdi-magnify"
           label="Search for a sound..."
           single-line
           hide-details
-        ></v-text-field>
+        />
         <v-spacer />
         <v-dialog v-model="showZips" scrollable max-width="768px">
-          <template v-slot:activator="{ on, attrs }">
+          <template #activator="{ on, attrs }">
             <v-btn class="zips" small color="primary" v-bind="attrs" v-on="on">
               <span class="upload-inner">Download</span>
-              <v-icon right>mdi-cloud-download</v-icon>
+              <v-icon right> mdi-cloud-download </v-icon>
             </v-btn>
           </template>
-          <BlipZips :zipsData="zipsData" @close="showZips = false" />
+          <BlipZips :zips-data="zipsData" @close="showZips = false" />
         </v-dialog>
-        <v-btn class="upload" small color="primary" href="https://forms.gle/LC1xt1YiVccrZxSe7" target="_blank">
+        <v-btn
+          class="upload"
+          small
+          color="primary"
+          href="https://forms.gle/LC1xt1YiVccrZxSe7"
+          target="_blank"
+        >
           <span class="upload-inner">Upload</span>
-          <v-icon right>mdi-cloud-upload</v-icon>
+          <v-icon right> mdi-cloud-upload </v-icon>
         </v-btn>
       </v-app-bar>
 
-      <v-main style="padding-top: 5px;">
+      <v-main style="padding-top: 5px">
         <v-container fluid>
           <v-card>
             <template v-if="!sheetData.length">
-              <v-progress-circular class="loader" indeterminate size="64" color="primary"></v-progress-circular>
+              <v-progress-circular
+                class="loader"
+                indeterminate
+                size="64"
+                color="primary"
+              />
             </template>
             <template v-else>
               <v-data-table
@@ -51,12 +73,12 @@
                 :items="sheetData"
                 :search="search"
                 :expanded="expanded"
-                :footerProps="{ itemsPerPageOptions: [100, 75, 50, -1] }"
+                :footer-props="{ itemsPerPageOptions: [100, 75, 50, -1] }"
                 height="calc(100vh - 150px)"
                 item-key="link"
                 single-expand
               >
-                <template v-slot:item.author="{ item }">
+                <template #item[author]="{ item }">
                   <!-- :set attr is a hack to set local template variable -->
                   <div
                     class="text-truncate field-author"
@@ -65,42 +87,70 @@
                     :set2="(authorDiscord = getAuthorDiscord(item.author))"
                   >
                     <template v-if="authorWebsite">
-                      <a :href="authorWebsite" class="info--text" target="_blank">{{ item.author }}</a>
+                      <a
+                        :href="authorWebsite"
+                        class="info--text"
+                        target="_blank"
+                        >{{ item.author }}</a
+                      >
                     </template>
-                    <template v-else>{{ item.author }}</template>
+                    <template v-else>
+                      {{ item.author }}
+                    </template>
                     <template v-if="authorDiscord">
-                      <div class="on-discord" :title="authorDiscord">{{ authorDiscord }}</div>
+                      <div class="on-discord" :title="authorDiscord">
+                        {{ authorDiscord }}
+                      </div>
                     </template>
                   </div>
                 </template>
-                <template v-slot:item.filename="{ item }">
-                  <div class="text-truncate field-filename" :title="item.filename">
+                <template #item[filename]="{ item }">
+                  <div
+                    class="text-truncate field-filename"
+                    :title="item.filename"
+                  >
                     {{ item.filename }}
                   </div>
                 </template>
-                <template v-slot:item.tags="{ item }">
-                  <div class="field-tags" :title="item.tags">{{ item.tags }}</div>
+                <template #item[tags]="{ item }">
+                  <div class="field-tags" :title="item.tags">
+                    {{ item.tags }}
+                  </div>
                 </template>
-                <template v-slot:expanded-item="{ item, headers }">
-                  <td :colspan="headers.length">
-                    <iframe :src="createIframeSrc(item.link)" width="100%" height="120" frameborder="0" />
+                <template #expanded-item="{ item, headers: h }">
+                  <td :colspan="h.length">
+                    <iframe
+                      :src="createIframeSrc(item.link)"
+                      width="100%"
+                      height="120"
+                      frameborder="0"
+                    />
                   </td>
                 </template>
-                <template v-slot:item.actions="{ item }">
-                  <div style="margin: 4px 0;" data-iframe-height>
+                <!-- eslint-disable-next-line vue/valid-v-slot -->
+                <template #item.actions="{ item }">
+                  <div style="margin: 4px 0" data-iframe-height>
                     <v-btn
-                      style="margin: 2px;"
+                      style="margin: 2px"
                       rounded
                       small
                       color="primary darken-4"
                       :href="createDownloadLink(item.link)"
                       target="_blank"
-                      >Download
-                      <v-icon right>mdi-cloud-download</v-icon>
+                    >
+                      Download
+                      <v-icon right> mdi-cloud-download </v-icon>
                     </v-btn>
-                    <v-btn style="margin: 2px;" rounded small my-2 color="secondary lighten-1" @click="expandItem(item)"
-                      >Preview
-                      <v-icon right>mdi-volume-high</v-icon>
+                    <v-btn
+                      style="margin: 2px"
+                      rounded
+                      small
+                      my-2
+                      color="secondary lighten-1"
+                      @click="expandItem(item)"
+                    >
+                      Preview
+                      <v-icon right> mdi-volume-high </v-icon>
                     </v-btn>
                   </div>
                 </template>
@@ -114,20 +164,20 @@
 </template>
 
 <script>
-import BlipIntroduction from './components/BlipIntroduction'
-import BlipZips from './components/BlipZips'
-import parse from 'csv-parse'
+import BlipIntroduction from "./components/BlipIntroduction"
+import BlipZips from "./components/BlipZips"
+import { parse } from "csv-parse"
 
 const sheetDataCsvUrl =
-  'https://docs.google.com/spreadsheets/d/e/2PACX-1vSphNZ_lnHkZjsWHJl0D9OKsOX7aZ4MEwoflkYGNl0XcOalspwQ-DH8G12hFimg9L5EdM7L2ZTA0v5D/pub?gid=1484031240&single=true&output=csv'
+  "https://docs.google.com/spreadsheets/d/e/2PACX-1vSphNZ_lnHkZjsWHJl0D9OKsOX7aZ4MEwoflkYGNl0XcOalspwQ-DH8G12hFimg9L5EdM7L2ZTA0v5D/pub?gid=1484031240&single=true&output=csv"
 const zipsDataCsvUrl =
-  'https://docs.google.com/spreadsheets/d/e/2PACX-1vSphNZ_lnHkZjsWHJl0D9OKsOX7aZ4MEwoflkYGNl0XcOalspwQ-DH8G12hFimg9L5EdM7L2ZTA0v5D/pub?gid=1327133211&single=true&output=csv'
+  "https://docs.google.com/spreadsheets/d/e/2PACX-1vSphNZ_lnHkZjsWHJl0D9OKsOX7aZ4MEwoflkYGNl0XcOalspwQ-DH8G12hFimg9L5EdM7L2ZTA0v5D/pub?gid=1327133211&single=true&output=csv"
 
 export default {
-  name: 'App',
+  name: "App",
   components: {
     BlipIntroduction,
-    BlipZips
+    BlipZips,
   },
   data() {
     return {
@@ -136,19 +186,19 @@ export default {
       loadError: false,
       showInfo: false,
       showZips: false,
-      search: '',
+      search: "",
       expanded: [],
       headers: [
         {
-          text: 'Author & Discord Handle',
-          align: 'start',
-          value: 'author'
+          text: "Author & Discord Handle",
+          align: "start",
+          value: "author",
         },
-        { text: 'Filename', value: 'filename' },
-        { text: 'Tags', value: 'tags' },
-        { text: 'Info', value: 'info' },
-        { text: 'Actions', value: 'actions', sortable: false, align: 'end' }
-      ]
+        { text: "Filename", value: "filename" },
+        { text: "Tags", value: "tags" },
+        { text: "Info", value: "info" },
+        { text: "Actions", value: "actions", sortable: false, align: "end" },
+      ],
     }
   },
   computed: {
@@ -156,13 +206,14 @@ export default {
       if (!this.sheetDataRaw) return []
       return this.sheetDataRaw.map((entry) => {
         return {
-          author: entry['Author'],
-          filename: entry['Filename'],
-          link: entry['Link'],
-          info: entry['Other Info'],
-          tags: entry['Tags'],
-          website: entry['Website'],
-          discord: entry['Discord']
+          author: entry["Author"],
+          filename: entry["Filename"],
+          link: entry["Link"],
+          info: entry["Other Info"],
+          tags: entry["Tags"],
+          website: entry["Website"],
+          discord: entry["Discord"],
+          actions: "",
         }
       })
     },
@@ -170,11 +221,11 @@ export default {
       if (!this.zipsDataRaw) return []
       return this.zipsDataRaw.map((entry) => {
         return {
-          title: entry['Title'],
-          link: entry['Link'],
-          notes: entry['Notes'],
-          numFiles: entry['Num Files'],
-          size: entry['Size']
+          title: entry["Title"],
+          link: entry["Link"],
+          notes: entry["Notes"],
+          numFiles: entry["Num Files"],
+          size: entry["Size"],
         }
       })
     },
@@ -183,11 +234,11 @@ export default {
       if (this.sheetData.length) {
         this.sheetData.forEach((item) => {
           let authorTrimmed = item.author.trim()
-          if (authorTrimmed && item.website && item.website.trim() !== '') {
+          if (authorTrimmed && item.website && item.website.trim() !== "") {
             if (!authorWebsitesTable[authorTrimmed]) {
               let websiteUrl = item.website
               if (websiteUrl.search(/^http[s]?:\/\//) === -1) {
-                websiteUrl = 'https://' + websiteUrl
+                websiteUrl = "https://" + websiteUrl
               }
               authorWebsitesTable[authorTrimmed] = websiteUrl
             }
@@ -201,7 +252,7 @@ export default {
       if (this.sheetData.length) {
         this.sheetData.forEach((item) => {
           let authorTrimmed = item.author.trim()
-          if (authorTrimmed && item.discord && item.discord.trim() !== '') {
+          if (authorTrimmed && item.discord && item.discord.trim() !== "") {
             if (!authorDiscordsTable[authorTrimmed]) {
               authorDiscordsTable[authorTrimmed] = item.discord
             }
@@ -209,22 +260,26 @@ export default {
         })
       }
       return authorDiscordsTable
-    }
+    },
   },
   mounted() {
-    if (!this.$cookies.isKey('has-seen-info')) {
-      if (!window.location.href.includes('localhost')) {
+    if (!this.$cookies.isKey("has-seen-info")) {
+      if (!window.location.href.includes("localhost")) {
         this.showInfo = true
-        this.$cookies.set('has-seen-info', true, Infinity)
+        this.$cookies.set("has-seen-info", true, Infinity)
       }
     }
 
     fetch(sheetDataCsvUrl).then((response) => {
-      response.text().then(async (data) => (this.sheetDataRaw = await this.parseCsv(data)))
+      response
+        .text()
+        .then(async (data) => (this.sheetDataRaw = await this.parseCsv(data)))
     })
 
     fetch(zipsDataCsvUrl).then((response) => {
-      response.text().then(async (data) => (this.zipsDataRaw = await this.parseCsv(data)))
+      response
+        .text()
+        .then(async (data) => (this.zipsDataRaw = await this.parseCsv(data)))
     })
   },
   methods: {
@@ -237,31 +292,27 @@ export default {
       })
     },
     getAuthorWebsite(author) {
-      return this.authorWebsites[author.trim()] || ''
+      return this.authorWebsites[author.trim()] || ""
     },
     getAuthorDiscord(author) {
-      return this.authorDiscords[author.trim()] || ''
+      return this.authorDiscords[author.trim()] || ""
     },
     expandItem(item) {
       this.expanded = [item]
     },
     createDownloadLink(link) {
       try {
-        var fileId = link.split('=')[1]
+        var fileId = link.split("=")[1]
         return `https://drive.google.com/uc?export=download&id=${fileId}`
-      } catch (error) {
-        // Shh
-      }
+      } catch (error) {}
     },
     createIframeSrc(link) {
       try {
-        var fileId = link.split('=')[1]
+        var fileId = link.split("=")[1]
         return `https://drive.google.com/file/d/${fileId}/preview`
-      } catch (error) {
-        // Shh
-      }
-    }
-  }
+      } catch (error) {}
+    },
+  },
 }
 </script>
 
@@ -275,7 +326,7 @@ body {
 }
 
 #app {
-  font-family: 'Roboto', Helvetica, Arial, sans-serif;
+  font-family: "Roboto", Helvetica, Arial, sans-serif;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
   color: #2c3e50;

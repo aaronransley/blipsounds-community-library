@@ -5,21 +5,22 @@
       <h4>Zips? Zippers? PANTS?!</h4>
       <v-divider />
       <p>
-        Below you can find archives of sounds from previous months of the Blipsounds Community Library. Download these
-        to quickly access a bunch of great content for use in your projects!
+        Below you can find archives of sounds from previous months of the
+        Blipsounds Community Library. Download these to quickly access a bunch
+        of great content for use in your projects!
       </p>
       <p>
         <em>Newest zips are at the top!</em>
       </p>
       <v-simple-table class="zips-table">
-        <template v-slot:default>
+        <template #default>
           <thead>
             <tr class="zips-header">
               <th class="text-left">Title</th>
               <th>Notes</th>
               <th># Files</th>
               <th>Size</th>
-              <th></th>
+              <th />
             </tr>
           </thead>
           <tbody>
@@ -31,14 +32,15 @@
               <td>
                 <v-btn
                   v-if="item.link"
-                  style="margin: 2px;"
+                  style="margin: 2px"
                   color="primary darken-4"
                   :href="item.link"
                   target="_blank"
                   rounded
                   small
-                  >Download
-                  <v-icon right>mdi-cloud-download</v-icon>
+                >
+                  Download
+                  <v-icon right> mdi-cloud-download </v-icon>
                 </v-btn>
                 <span v-else>Coming soon... ⌚</span>
               </td>
@@ -47,10 +49,12 @@
         </template>
       </v-simple-table>
     </v-card-text>
-    <v-divider></v-divider>
+    <v-divider />
     <v-card-actions>
       <v-spacer />
-      <v-btn color="primary" text rounded @click="$emit('close')">Got 'em!</v-btn>
+      <v-btn color="primary" text rounded @click="$emit('close')">
+        Got 'em!
+      </v-btn>
     </v-card-actions>
   </v-card>
 </template>
@@ -60,9 +64,9 @@ export default {
   props: {
     zipsData: {
       type: Array,
-      required: true
-    }
-  }
+      required: true,
+    },
+  },
 }
 </script>
 
